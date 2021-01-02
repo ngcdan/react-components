@@ -4,21 +4,18 @@ import * as courseActions from '../../redux/actions/courseActions';
 import PropTypes from 'prop-types';
 
 class CoursesPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state ={
-      course: {
-        title: ""
-      } 
-    }
-  }
+  state ={
+    course: {
+      title: ""
+    } 
+  };
 
   onHanderChange = (event) => {
-    let course = {...this.state.course, title: event.target.value}
+    let course = {...this.state.course, title: event.target.value};
     this.setState({course});
-  }
+  };
 
-  onHandeSubmit(event) {
+  onHandeSubmit = (event)  => {
     event.preventDefault();
     this.props.dispatch(courseActions.createCourse(this.state.course));
   }
