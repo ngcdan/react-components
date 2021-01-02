@@ -41,16 +41,12 @@ CoursesPage.propTypes = {
   actions: PropTypes.object.isRequired
 };
 
-function mapDispatchToProp(dispatch) {
-  return {
-    actions: bindActionCreators(courseActions, dispatch)
-  };
+function mapStateToProps(state){
+  return { courses: state.courses };
 }
 
-function mapStateToProps(state){
-  return {
-    courses: state.courses
-  };
+function mapDispatchToProp(dispatch) {
+  return { actions: bindActionCreators(courseActions, dispatch) };
 }
 
 export default connect(mapStateToProps, mapDispatchToProp)(CoursesPage);
