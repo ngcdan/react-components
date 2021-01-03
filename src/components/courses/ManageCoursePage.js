@@ -1,27 +1,28 @@
-import React from "react";
-import { connect } from 'react-redux';
-import { loadCourses } from '../../redux/actions/courseActions';
-import { loadAuthors } from '../../redux/actions/authorActions';
+import React, {useEffect} from "react";
+import {connect} from 'react-redux';
+import {loadCourses} from '../../redux/actions/courseActions';
+import {loadAuthors} from '../../redux/actions/authorActions';
 import PropTypes from 'prop-types';
 
-class CoursesPage extends React.Component {
-componentDidMount() {
-const { loadAuthors, loadCourses } = this.props;
-    loadCourses().catch(error => {
-      alert("load courses failed." + error);
-    });
-    loadAuthors().catch(error => {
-      alert("load authors failed." + error);
-    });
-  }
+function CoursesPage({courses, authors, loadAuthors, loadCourses}) {
+  useEffect(() => {
+    if (courses.length === 0) {
+      loadCourses().catch(error => {
+        alert("load courses failed." + error);
+      });
+    }
+    if (authors.length === 0) {
+      loadAuthors().catch(error => {
+        alert("load authors failed." + error);
+      });
+    }
+  }, [])
 
-  render() {
-    return (
-      <>
-        <h2>Courses</h2>
-      </>
-    );
-  }
+  return (
+    <>
+      <h2>Courses</h2>
+    </>
+  );
 }
 
 CoursesPage.propTypes = {
