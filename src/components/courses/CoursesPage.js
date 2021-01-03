@@ -13,12 +13,17 @@ class CoursesPage extends React.Component {
   };
 
   componentDidMount() {
-    this.props.actions.loadCourses().catch(error => {
-      alert("load courses failed." + error);
-    });
-    this.props.actions.loadAuthors().catch(error => {
-      alert("load authors failed." + error);
-    });
+    const {courses, authors, actions} = this.props;
+    if (courses.length === 0) {
+      actions.loadCourses().catch(error => {
+        alert("load courses failed." + error);
+      });
+    }
+    if (authors.length === 0) {
+      actions.loadAuthors().catch(error => {
+        alert("load authors failed." + error);
+      });
+    }
   }
 
   render() {
@@ -27,7 +32,9 @@ class CoursesPage extends React.Component {
         {this.state.redirectToAddCoursePage && <Redirect to="/course" />}
         <h2>Courses</h2>
         <button style={{marginBottom: 20}} className="btn btn-primary add-course"
-          onClick={() => this.setState({redirectToAddCoursePage: true})} />
+          onClick={() => this.setState({redirectToAddCoursePage: true})} >
+          Add Course
+          </button>
         <CourseList courses={this.props.courses} />
       </>
     );
@@ -36,10 +43,26 @@ class CoursesPage extends React.Component {
 
 CoursesPage.propTypes = {
   courses: PropTypes.array.isRequired,
-  actions: PropTypes.object.isRequired
+  actions: PropTypes.object.isRequired,
+  authors: PropTypes.array.isRequired,
 };
 
-function mapDispatchToProp(dispatch) {
+function mapStateToProps(state) {
+  return {
+    courses:
+      state.authors.length === 0
+        ? []
+        : state.courses.map(course => {
+            return {
+              ...course,
+              authorName: state.authors.find(a => a.id === course.authorId).name
+            };
+          }),
+    authors: state.authors
+  };
+}
+
+function mapDispatchToProps(dispatch) {
   return {
     actions: {
       loadCourses: bindActionCreators(courseActions.loadCourses, dispatch),
@@ -48,18 +71,4 @@ function mapDispatchToProp(dispatch) {
   };
 }
 
-function mapStateToProps(state) {
-  return {
-    courses: state.authors.length === 0
-      ? []
-      : state.courses.map(course => {
-        return {
-          ...course,
-          authorName: state.authors.find(a => a.id === course.authorId).name
-        };
-      }),
-    authors: state.authors
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProp)(CoursesPage);
+export default connect(mapStateToProps, mapDispatchToProps)(CoursesPage);
