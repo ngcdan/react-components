@@ -27,9 +27,13 @@ class CoursesPage extends React.Component {
     }
   }
 
-  handleDeleteCourse = course => {
+  handleDeleteCourse = async course => {
     toast.success("Delete course success.");
-    this.props.actions.deleteCourse(course);
+    try {
+      await this.props.actions.deleteCourse(course);
+    } catch (error) {
+      toast.error("Delete course fail " + error.message, {autoClose: false});
+    }
   }; 
 
   render() {
