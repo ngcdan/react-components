@@ -1,4 +1,4 @@
-import {handleResponse, handleError} from './apiUtils';
+import { handleResponse, handleError } from './apiUtils';
 const baseUrl = process.env.API_URL + "/courses/";
 
 export function getCourses() {
@@ -10,7 +10,7 @@ export function getCourses() {
 export function saveCourse(course) {
   return fetch(baseUrl + (course.id || ""), {
     method: course.id ? "PUT" : "POST",
-    headers: {"content-type": "application/json"},
+    headers: { "content-type": "application/json" },
     body: JSON.stringify(course)
   })
     .then(handleResponse)

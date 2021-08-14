@@ -9,7 +9,7 @@ export function getAuthors() {
 export function saveAuthor(author) {
   return fetch(baseUrl + (author.id || ""), {
     method: author.id ? "PUT" : "POST",
-    headers: {"content-type": "application/json"},
+    headers: { "content-type": "application/json" },
     body: JSON.stringify(author)
   }).then(handleResponse).catch(handleError);
 }

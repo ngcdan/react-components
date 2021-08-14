@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import TextInput from "../common/TextInput";
 import SelectInput from "../common/SelectInput";
 
-const CourseForm = ({course, authors, onSave, onChange, saving = false, errors = {}}) => {
+const CourseForm = ({ course, authors, onSave, onChange, saving = false, errors = {} }) => {
   return (
     <form onSubmit={onSave}>
       <h2>{course.id ? "Edit" : "Add"} Course</h2>
@@ -17,8 +17,7 @@ const CourseForm = ({course, authors, onSave, onChange, saving = false, errors =
         label="Title"
         value={course.title}
         onChange={onChange}
-        error={errors.title}
-      />
+        error={errors.title} />
 
       <SelectInput
         name="authorId"

@@ -11,9 +11,9 @@ const store = configureStore();
 
 render(
   <ReduxProvider store={store}>
-  <Router>
-    <App />
-  </Router>
+    <Router>
+      <App />
+    </Router>
   </ReduxProvider>,
   document.getElementById("app")
 );
